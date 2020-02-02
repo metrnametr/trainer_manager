@@ -6,54 +6,33 @@ import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 const {Item, Section, Subheader} = List;
 
-const TasksList = () => {
-  const storeData = async () => {
-    try {
-      await AsyncStorage.setItem('@storage_Key', 'stored value');
-    } catch (e) {
-      // saving error
-    }
-  };
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@storage_Key');
-      if (value !== null) {
-        console.log(value);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
+const TasksList = ({title = 'Default title', items = []}) => {
   return (
     <View>
       <Section>
-        <Subheader>Some title</Subheader>
-        <Item
-          style={styles.item}
-          title="First Item"
-          left={() => <Icon color={theme.colors.darkRed} name="folder" />}
-          right={() => (
-            <Icon
-              color={theme.colors.darkGreen}
-              size={28}
-              name="check-circle"
-            />
-          )}
-        />
-        <Item
-          style={styles.item}
-          title="Second Item"
-          description="Два похода"
-          left={() => <Icon color={theme.colors.darkRed} name="folder" />}
-          right={() => (
-            <Icon
-              style={{alignSelf: 'center', padding: 10}}
-              color={theme.colors.darkGreen}
-              size={28}
-              name="check-circle"
-            />
-          )}
-        />
+        <Subheader style={{color: theme.backgroundLight}}>{title}</Subheader>
+        {items.map(item => (
+          <Item
+            style={styles.item}
+            title={item.title}
+            description={item.description}
+            left={() => (
+              <Icon
+                style={{alignSelf: 'center', padding: 10}}
+                color={theme.colors.darkRed}
+                name="folder"
+              />
+            )}
+            right={() => (
+              <Icon
+                style={{alignSelf: 'center', padding: 10}}
+                color={theme.colors.darkGreen}
+                size={28}
+                name="check-circle"
+              />
+            )}
+          />
+        ))}
       </Section>
     </View>
   );

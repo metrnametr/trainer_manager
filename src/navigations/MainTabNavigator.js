@@ -6,8 +6,9 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MainScreen from '../screens/MainScreen';
+import TaskScreen from '../screens/TasksScreen';
 import theme from '../../common/theme';
-// import CashScreen from '../screens/CashScreen';
+
 
 // import CreateBankScreen from '../screens/CreateBankScreen';
 
@@ -39,7 +40,7 @@ const MainStack = createStackNavigator(
 );
 
 MainStack.navigationOptions = {
-  tabBarLabel: 'Transaction',
+  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <AntIcon
       // focused={focused}
@@ -50,24 +51,71 @@ MainStack.navigationOptions = {
   ),
   activeColor: 'black',
   barStyle: {
-    position: 'absolute',
+    // position: 'absolute',
     backgroundColor: theme.backgroundLight,
-    zIndex: 100,
-    top: '91%',
-    left: 0,
-    right: 0,
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 0,
+    // zIndex: 100,
+    // top: '91%',
+    // left: 0,
+    // right: 0,
+    // elevation: 0,
+    // shadowOpacity: 0,
+    // borderBottomWidth: 0,
   },
 };
 
 MainStack.path = '';
 
+
+const TasksStack = createStackNavigator(
+  {
+    Tasks: {
+      screen: TaskScreen,
+      navigationOptions: ({navigation}) => ({
+        // headerLeft:(<Button onPress={() => navigation.openDrawer()} title="qwe" />),
+        // header: null
+      }),
+    },
+  },
+  {
+    ...config,
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: theme.backgroundLight, //theme.mainColorDark
+      },
+    },
+  },
+);
+
+TasksStack.navigationOptions = {
+  tabBarLabel: 'Tasks',
+  tabBarIcon: ({ focused }) => (
+    <AntIcon
+      // focused={focused}
+      name="sync"
+      color="white"
+      size={ 16 }
+    />
+  ),
+  activeColor: 'black',
+  barStyle: {
+    // position: 'absolute',
+    backgroundColor: theme.backgroundLight,
+    // zIndex: 100,
+    // top: '91%',
+    // left: 0,
+    // right: 0,
+    // elevation: 0,
+    // shadowOpacity: 0,
+    // borderBottomWidth: 0,
+  },
+};
+
+TasksStack.path = '';
+
 const MainTabNavigator = createMaterialBottomTabNavigator(
   {
     Main: {screen: MainStack},
-    // Cash: {screen: CashStack},
+    Tasks: {screen: TasksStack},
   },
   {
     // shifting: true,  

@@ -11,20 +11,22 @@ import {DefaultTheme, Provider} from 'react-native-paper';
 
 import AppNavigator from './src/navigations/AppNavigator';
 
-// import { Provider as ReduxProvider } from 'react-redux';
-// import store from './src/store';
+import {Provider as ReduxProvider} from 'react-redux';
+import getStore from './src/store';
+import {PersistGate} from 'redux-persist/integration/react';
+
 
 const THEME = {
   ...DefaultTheme,
   colors: {
     // primary: theme.primaryColorDark,
     disabled: 'white',
-    text: '#1d1d1b'
+    text: '#1d1d1b',
   },
   fonts: {
-    regular: 'roboto-regular'
-  }
-}
+    regular: 'roboto-regular',
+  },
+};
 
 // const loadFont = async () => {
 //   await Font.loadAsync({
@@ -39,22 +41,24 @@ const THEME = {
 
 const App = () => {
   const [loading, setLoading] = useState(true);
+  const {store, persistor} = getStore();
   // const drawer = useRef();
-
   // if (loading) {
   //   return <AppLoading startAsync={ loadFont } onFinish={ () => setTimeout(() => setLoading(false), 1000) } />;
   // }
   console.log(AppNavigator);
   return (
     <View style={{flex: 1}}>
-      {/* <ReduxProvider store={ store }> */}
-      {/* <DrawerProvider> */}
-      <Provider theme={THEME}>
-        {/* <BottomNavigation mr="mr" /> */}
-        <AppNavigator />
-      </Provider>
-      {/* </DrawerProvider> */}
-      {/* </ReduxProvider> */}
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          {/* <DrawerProvider> */}
+          <Provider theme={THEME}>
+            {/* <BottomNavigation mr="mr" /> */}
+            <AppNavigator />
+          </Provider>
+          {/* </DrawerProvider> */}
+        </PersistGate>
+      </ReduxProvider>
     </View>
   );
 };
